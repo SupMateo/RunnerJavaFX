@@ -9,9 +9,9 @@ public abstract class AnimatedThing {
     private int state;
     private int index;
     private final double duration;
-    private int maximumIndex;
-    private int spriteHeight;
-    private int offset;
+    private final int maximumIndex;
+    private final int spriteHeight;
+    private final int offset;
 
 
 
@@ -27,12 +27,7 @@ public abstract class AnimatedThing {
         this.image = new ImageView("file:src\\img\\"+fileName);
     }
 
-    public void update(double time,Camera camera){
-        setIndex((int) ((time/1000000)/getDuration())% getMaximumIndex());
-        getImage().setViewport(new Rectangle2D(10+getIndex()* getOffset(),0, getOffset(), getSpriteHeight()));
-        getImage().setX(getX()-camera.getX());
-        getImage().setY(250);
-    }
+
 
     public int getSpriteHeight(){
         return spriteHeight;
@@ -41,6 +36,8 @@ public abstract class AnimatedThing {
     public void setIndex(int index) {
         this.index = index;
     }
+
+    public void setState(int state) { this.state = state; }
 
     public ImageView getImage(){
         return image;
@@ -64,6 +61,13 @@ public abstract class AnimatedThing {
 
     public double getX() {
         return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+    public void setY(double y){
+        this.y = y;
     }
 
     public double getY() {

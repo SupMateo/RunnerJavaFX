@@ -18,8 +18,8 @@ public class Main extends Application{
         stage.setScene(gameScene);
         stage.show();
 
-        Button buttonPlus = new Button("Camera+");
-        Button buttonMoins = new Button("Camera-");
+        Button buttonPlus = new Button("Reset velocity");
+        Button buttonMoins = new Button("Velocity+");
 
 
         root.getChildren().addAll(buttonPlus,buttonMoins);
@@ -30,6 +30,8 @@ public class Main extends Application{
             gameScene.testMoins();
         });
         buttonMoins.setLayoutY(70);
+
+
     }
 
     public static void main(String[] args) {
