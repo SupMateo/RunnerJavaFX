@@ -22,6 +22,7 @@ public class Main extends Application{
         Button buttonMoins = new Button("Velocity+");
 
 
+
         root.getChildren().addAll(buttonPlus,buttonMoins);
         buttonPlus.setOnAction((e)->{
             gameScene.testPlus();

@@ -27,11 +27,11 @@ public class Camera {
         double const1 = 1;
         double const2 = 1.4;
 
-        a = (int)(0.07*(const1*(hero.getX() - getX() - 300) + const2*v));
+        a = (int)(0.05*(const1*(hero.getX() - getX() - 300) + const2*v));
 
-        v = (int)(v -  a);
+        v = (int)((v -  a));
 
-        x = (int) ( getX() - v);
+        x = (int) ((getX() - v));
         setX(x);
         //System.out.println("a : "+ Double.toString(a) + " / v : "+ Double.toString(v) +" / x hero : "+ Double.toString(hero.getX()) + " / x camera : " +Double.toString(getX()));
 
