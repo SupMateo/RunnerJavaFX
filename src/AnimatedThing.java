@@ -27,11 +27,6 @@ public abstract class AnimatedThing {
         this.image = new ImageView("file:src\\img\\"+fileName);
     }
 
-
-    public void setImage(ImageView image) {
-        this.image = image;
-    }
-
     public int getSpriteHeight(){
         return spriteHeight;
     }

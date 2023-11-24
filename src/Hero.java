@@ -103,6 +103,38 @@ public class Hero extends AnimatedThing{
         isJumping = true;
     }
 
+    public void setDashing(boolean dashing) {
+        isDashing = dashing;
+    }
+
+    public void setOnFloor(boolean onFloor) {
+        isOnFloor = onFloor;
+    }
+
+    public boolean isJumpingUp() {
+        return isJumpingUp;
+    }
+
+    public void setJumpingUp(boolean jumpingUp) {
+        isJumpingUp = jumpingUp;
+    }
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
+    }
+
+    public double getLastY() {
+        return lastY;
+    }
+
+    public void setLastY(double lastY) {
+        this.lastY = lastY;
+    }
+
     public boolean isOnFloor(){
         return isOnFloor;
     }

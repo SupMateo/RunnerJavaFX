@@ -14,6 +14,8 @@ import java.util.Random;
 
 public class GameScene extends Scene {
 
+    private boolean running = true;
+
     Camera camera = new Camera(10,0);
     StaticThing bgLeft = new StaticThing("desert.png",0,0);
     StaticThing bgRight = new StaticThing("desert.png",800,0);
@@ -24,18 +26,29 @@ public class GameScene extends Scene {
     Hero hero = new Hero("heros.png", 500,250, 200,0,6,82,100);
     Hero hero_invincible = new Hero("heros_hurt.png", 500,-500, 200,0,6,82,100);
 
+    StaticThing gameOver = new StaticThing("gameover.png",150,100);
+
     public GameScene(Parent parent, double v, double v1) {
         super(parent, v, v1);
         listOfFoe.add(firstFoe);
+
+        ((Group)parent).getChildren().addAll(bgLeft.getImageView(), bgRight.getImageView(), hero.getImage(), firstFoe.getImage(), hero_invincible.getImage());
         for(int i = 0; i<hero.getHealth();i++){
-            lifeList.add(new StaticThing("heart.png",i*50 + 100, 0));
+            lifeList.add(new StaticThing("heart.png",i*(-50) + 745, 5));
             ((Group)parent).getChildren().add(lifeList.get(lifeList.size()-1).getImageView());
         }
-        ((Group)parent).getChildren().addAll(bgLeft.getImageView(), bgRight.getImageView(), hero.getImage(), firstFoe.getImage(), hero_invincible.getImage());
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                //check health
+                if(hero.getHealth() <= 0){
+                    gameOver.getImageView().setX(gameOver.getX());
+                    gameOver.getImageView().setY(gameOver.getY());
+                    ((Group)parent).getChildren().add(gameOver.getImageView());
+                    running = false;
+                }
+
                 //Foe spawning
                 if(Math.random() <0.005 && listOfFoe.get(listOfFoe.size()-1).getX() < hero.getX()+500){
                     listOfFoe.add(new Foe("goomba.png", hero.getX()+700,270,75,0,11,80,80));
@@ -51,6 +64,9 @@ public class GameScene extends Scene {
                 for(Foe foe:listOfFoe){
                     if (hero.isCollide(foe.getCollideBox()) && !hero.isInvincible()){
                         System.out.println("COLLIDE");
+                        lifeList.get(lifeList.size()-1).getImageView().setY(-50);
+                        lifeList.remove(lifeList.size()-1);
+                        hero.hurt();
                         hero.setInvincibility(250);
                     }
                 }
@@ -72,14 +88,15 @@ public class GameScene extends Scene {
                 }
 
                 if (hero.isInvincible()){
+                    hero_invincible.getImage().setVisible(true);
                     hero_invincible.setX(hero.getX());
                     hero_invincible.setY(hero.getY());
-                    hero_invincible.setState(hero.getState());
-                    hero_invincible.setIndex(hero.getIndex());
+
                 }else{
-                    hero_invincible.setX(hero.getX());
-                    hero_invincible.setY(-100);
+                    hero_invincible.getImage().setVisible(false);
                 }
+
+
 
 
 
@@ -103,11 +120,12 @@ public class GameScene extends Scene {
         timer.start();
     }
 
+
     public void render(long time){
         for(StaticThing heart:lifeList){
-            heart.getImageView().setViewport(new Rectangle2D((heart.getX()), heart.getY(), 50,50));
+            heart.getImageView().setX(heart.getX());
+            heart.getImageView().setY(heart.getY());
         }
-
         bgLeft.getImageView().setViewport(new Rectangle2D((camera.getX()%800)-bgLeft.getX(),0,800,400));
         bgLeft.getImageView().setX(0);
         bgLeft.getImageView().setY(0);
@@ -115,11 +133,20 @@ public class GameScene extends Scene {
         bgRight.getImageView().setX(0);
         bgRight.getImageView().setY(0);
 
+        hero_invincible.setState(hero.getState());
+        hero_invincible.setIndex(hero.getIndex());
+        hero_invincible.setDashing(hero.isDashing());
+        hero_invincible.setJumping(hero.isJumping());
+        hero_invincible.setJumpingUp(hero.isJumpingUp());
+        hero_invincible.setLastY(hero.getLastY());
+        hero_invincible.update(time,camera);
+
         hero.update(time,camera);
         for(Foe foe : listOfFoe){
             foe.update(time,camera);
         }
-        hero_invincible.update(time,camera);
+
+
         camera.update(hero,time);
 
     }
