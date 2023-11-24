@@ -28,6 +28,9 @@ public abstract class AnimatedThing {
     }
 
 
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
 
     public int getSpriteHeight(){
         return spriteHeight;
@@ -77,4 +80,17 @@ public abstract class AnimatedThing {
     public double getDuration() {
         return duration;
     }
+
+    public Rectangle2D getCollideBox(){
+        return new Rectangle2D(getX()+10,getY()+10,getOffset()-20,getSpriteHeight()-20);
+    }
+
+    public boolean isCollide(Rectangle2D collider){
+        if (getCollideBox().intersects(collider)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

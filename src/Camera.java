@@ -27,7 +27,7 @@ public class Camera {
         double const1 = 1;
         double const2 = 1.4;
 
-        a = (int)(0.05*(const1*(hero.getX() - getX() - 300) + const2*v));
+        a = (int)(0.05*(const1*(hero.getX() - getX()-100) + const2*v));
 
         v = (int)((v -  a));
 

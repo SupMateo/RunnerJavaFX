@@ -1,7 +1,11 @@
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.ImageView;
 
 public class Hero extends AnimatedThing{
     private double velocity = 0;
+
+    private int health = 3;
+    private double invicibility = 0;
     private double lastY;
     private double dashTime = 0;
     private boolean isDashing = false;
@@ -13,6 +17,14 @@ public class Hero extends AnimatedThing{
         super(fileName, initX, initY, duration,state,maximumIndex,offset,spriteHeight);
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void hurt(){
+        health -=1;
+    }
+
     public void setVelocity(double v){
         velocity = v;
     }
@@ -21,23 +33,29 @@ public class Hero extends AnimatedThing{
         return velocity;
     }
 
-    public void update(double time,Camera camera){
-        setIndex((int) ((time/1000000)/getDuration())% getMaximumIndex());
-        if (isJumping && isJumpingUp) {
-            setState(1);
-            setIndex(0);
-        } else if (isDashing && isJumping){
-                isJumpingUp = false;
+    public void setInvincibility(double invincibility) {
+        this.invicibility = invincibility;
+    }
+
+    public void setAnimation(){
+            if (isJumping && isJumpingUp) {
+                setState(1);
+                setIndex(0);
+            } else if (isDashing && isJumping){
                 setY(lastY);
                 setState(0);
                 setIndex(1);
-        } else if (isJumping) {
-            setState(1);
-            setIndex(1);
+            } else if (isJumping) {
+                setState(1);
+                setIndex(1);
         }
+    }
 
+    public void update(double time,Camera camera){
+        setIndex((int) ((time/1000000)/getDuration())% getMaximumIndex());
+        setAnimation();
         getImage().setViewport(new Rectangle2D(10+getIndex()* getOffset(),getState()*150, getOffset(), getSpriteHeight()));
-        getImage().setX(getX()-camera.getX()-200);
+        getImage().setX(getX()-camera.getX());
         getImage().setY(getY());
         gravity();
     }
@@ -48,13 +66,13 @@ public class Hero extends AnimatedThing{
             getImage().setViewport(new Rectangle2D(10+getIndex()* getOffset(),getState()*150, getOffset(), getSpriteHeight()));
             if (isJumpingUp) {
                 getImage().setViewport(new Rectangle2D(10+getIndex()* getOffset(),getState()*150, getOffset(), getSpriteHeight()));
-                setY(getY() - 10);
+                setY(getY() - 6);
                 if (getY()<100){
                     getImage().setViewport(new Rectangle2D(10+getIndex()* getOffset(),getState()*150, getOffset(), getSpriteHeight()));
                     isJumpingUp=false;
                 }
             }
-            setY(getY()+5);
+            setY(getY()+3);
             if (getY()>250){
                 setState(0);
                 System.out.println("atterie");
@@ -80,7 +98,7 @@ public class Hero extends AnimatedThing{
 
     public void jump() {
         isOnFloor = false;
-        setY(getY()-5);
+        setY(getY()-3);
         isJumpingUp = true;
         isJumping = true;
     }
@@ -104,5 +122,17 @@ public class Hero extends AnimatedThing{
 
     public void setIsDashing(boolean b) {
         isDashing = b;
+    }
+
+    public double getInvicibility() {
+        return invicibility;
+    }
+
+    public boolean isInvincible() {
+        if (invicibility > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
