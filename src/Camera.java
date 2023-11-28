@@ -33,7 +33,6 @@ public class Camera {
 
         x = (int) ((getX() - v));
         setX(x);
-        //System.out.println("a : "+ Double.toString(a) + " / v : "+ Double.toString(v) +" / x hero : "+ Double.toString(hero.getX()) + " / x camera : " +Double.toString(getX()));
 
 
 

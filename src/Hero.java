@@ -2,10 +2,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 
 public class Hero extends AnimatedThing{
-    private double velocity = 0;
+    private double velocity = 6;
 
     private int health = 3;
-    private double invicibility = 0;
+    private double invincibility = 0;
     private double lastY;
     private double dashTime = 0;
     private boolean isDashing = false;
@@ -34,7 +34,7 @@ public class Hero extends AnimatedThing{
     }
 
     public void setInvincibility(double invincibility) {
-        this.invicibility = invincibility;
+        this.invincibility = invincibility;
     }
 
     public void setAnimation(){
@@ -58,6 +58,10 @@ public class Hero extends AnimatedThing{
         getImage().setX(getX()-camera.getX());
         getImage().setY(getY());
         gravity();
+    }
+
+    public void healthUp(){
+        this.health +=1;
     }
 
 
@@ -157,11 +161,11 @@ public class Hero extends AnimatedThing{
     }
 
     public double getInvicibility() {
-        return invicibility;
+        return invincibility;
     }
 
     public boolean isInvincible() {
-        if (invicibility > 0){
+        if (invincibility > 0){
             return true;
         }else{
             return false;

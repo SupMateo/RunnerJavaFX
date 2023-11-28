@@ -18,7 +18,7 @@ public class Main extends Application{
         stage.setScene(gameScene);
         stage.show();
 
-        Button buttonPlus = new Button("Reset velocity");
+        /*Button buttonPlus = new Button("Reset velocity");
         Button buttonMoins = new Button("Velocity+");
 
 
@@ -30,7 +30,7 @@ public class Main extends Application{
         buttonMoins.setOnAction((e)->{
             gameScene.testMoins();
         });
-        buttonMoins.setLayoutY(70);
+        buttonMoins.setLayoutY(70);*/
 
 
     }

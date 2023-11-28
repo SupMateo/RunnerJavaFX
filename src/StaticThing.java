@@ -5,7 +5,7 @@ public class StaticThing {
     private int x;
     private int y;
 
-    ImageView image;
+    private ImageView image;
 
 
     public StaticThing(String fileName, int x, int y){
@@ -34,6 +34,7 @@ public class StaticThing {
         return this.y;
     }
 
-
-
+    public void setImage(String fileName) {
+        this.image = new ImageView("file:src\\img\\"+fileName);
+    }
 }
